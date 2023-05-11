@@ -1,0 +1,19 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditTextPreference
+        app:key="userToken"
+        app:title="@string/usertoken_title"
+        app:useSimpleSummaryProvider="true" />
+    <EditTextPreference
+        app:key="serverAddress"
+        app:title="@string/server_address"
+        android:defaultValue="https://api.ec.tnkv.ru/"
+        app:useSimpleSummaryProvider="true" />
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="isDebug"
+        android:title="@string/debug_switch" />
+
+
+</PreferenceScreen>

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name" translatable="false">EC App</string>
+    <string name="reports">Reports</string>
+    <string name="archive">Archive</string>
+    <string name="settings">Settings</string>
+    <!-- Preference Titles -->
+
+    <!-- Messages Preferences -->
+
+    <!-- Sync Preferences -->
+    <string name="usertoken_title">Your token</string>
+    <string name="debug_switch" translatable="false">Debug</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="server_address">Server address</string>
+</resources>

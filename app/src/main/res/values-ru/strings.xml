@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="reports">Репорты</string>
+    <string name="archive">Архив</string>
+    <string name="settings">Настройки</string>
+    <string name="usertoken_title">Ваш ключ</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="server_address">Адресс сервера</string>
+</resources>

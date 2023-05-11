@@ -1,0 +1,2 @@
+# ECApp
+Приложение для ExceptionCathcer.
