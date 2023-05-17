@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="reports">Репорты</string>
-    <string name="archive">Архив</string>
     <string name="settings">Настройки</string>
     <string name="usertoken_title">Ваш ключ</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="server_address">Адресс сервера</string>
+    <string name="refreshing">Обновление..</string>
+    <string name="refresh">Обновить</string>
+    <string name="generate_token">Сгенерировать токен</string>
+    <string name="send_test_report">Отправить тестовый репорт</string>
+    <string name="sent">Отправлено</string>
 </resources>

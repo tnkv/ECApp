@@ -1,15 +1,17 @@
 <resources>
     <string name="app_name" translatable="false">EC App</string>
-    <string name="reports">Reports</string>
-    <string name="archive">Archive</string>
     <string name="settings">Settings</string>
-    <!-- Preference Titles -->
-
-    <!-- Messages Preferences -->
-
-    <!-- Sync Preferences -->
     <string name="usertoken_title">Your token</string>
-    <string name="debug_switch" translatable="false">Debug</string>
     <string name="title_activity_settings">Settings</string>
     <string name="server_address">Server address</string>
+    <string name="refreshing">Refreshing..</string>
+    <string name="refresh">Refresh</string>
+    <string name="generate_token">Generate token</string>
+    <string name="send_test_report">Send test report</string>
+    <string name="sent">Sent</string>
+    <string name="default_report_id" translatable="false">1</string>
+    <string name="default_report_application" translatable="false">Application</string>
+    <string name="default_report_time" translatable="false">01-01-1970 00:00</string>
+    <string name="default_report_location" translatable="false">Main</string>
+    <string name="default_report_exception" translatable="false">Exception</string>
 </resources>

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+<menu
     xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:title="@string/settings"
-        android:id="@+id/SettingsMItem"/>
     <item
         android:id="@+id/RefreshMItem"
-        android:icon="@drawable/baseline_refresh_24"
-        android:title=""
-        app:showAsAction="always" />
+        android:title="@string/refresh"/>
+    <item android:title="@string/settings"
+        android:id="@+id/SettingsMItem"/>
+
 </menu>

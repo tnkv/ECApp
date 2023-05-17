@@ -1,2 +1,2 @@
 # ECApp
-Приложение для ExceptionCathcer.
+Приложение для ExceptionCatcher.

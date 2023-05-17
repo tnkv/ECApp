@@ -1,34 +1,41 @@
 package ru.tnkv.ecapp;
 
-import static ru.tnkv.ecapp.utils.GetReportList.getActualReports;
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ru.tnkv.ecapp.utils.GetReportList;
+import java.util.ArrayList;
+
+import ru.tnkv.ecapp.utils.DateConverter;
+import ru.tnkv.ecapp.utils.HttpRequests;
+import ru.tnkv.ecapp.utils.ReportBlockAdapter;
 
 public class MainActivity extends AppCompatActivity {
+    RecyclerView reportList;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String reportListUrl = "" + prefs.getString("serverAddress", "https://api.ec.tnkv.ru/") + "getReports?token=" +  prefs.getString("userToken", "");
-        //updateReportList("https://api.ec.tnkv.ru/getReports?token=c8911f9d-4100-4e59-9766-8575979cecb0");
+        // Создаю строку для запроса, беру значения из SharedPreferences если они там есть
+        String reportListUrl = "" + prefs.getString("serverAddress", "https://api.ec.tnkv.ru/") + "getReports?token=" + prefs.getString("userToken", "");
         updateReportList(reportListUrl);
+
     }
 
     public void updateReportList(String url) {
@@ -37,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    String answerFromServer = GetReportList.getJson(url);
-                    JSONArray arr;
+                    String answerFromServer = HttpRequests.getJson(url);
+                    JSONArray reportListArray;
                     try {
-                        arr = new JSONObject(answerFromServer).getJSONArray("reports");
+                        reportListArray = new JSONObject(answerFromServer).getJSONArray("reports");
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -48,16 +55,34 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void run() {
+                            ArrayList<Long> reportId = new ArrayList<>();
+                            ArrayList<String> reportDate = new ArrayList<>();
+                            ArrayList<String> reportAppname = new ArrayList<>();
+                            ArrayList<String> reportLocation = new ArrayList<>();
+                            ArrayList<String> reportException = new ArrayList<>();
                             setContentView(R.layout.activity_main);
-                            ReportBlockAdapter adapter = null;
-                            try {
-                                adapter = new ReportBlockAdapter(MainActivity.this, getActualReports(arr));
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            }
+                            for (int i = 0; i < reportListArray.length(); i++) {
+                                try {
 
-                            ListView lv = findViewById(R.id.LV);
-                            lv.setAdapter(adapter);
+                                    JSONObject reportData = reportListArray.getJSONObject(i);
+                                    reportId.add(reportData.getLong("id"));
+                                    reportDate.add(DateConverter.getHumanDate(reportData.getLong("timestamp")));
+                                    reportAppname.add(reportData.getString("application"));
+                                    reportLocation.add(reportData.getString("location"));
+                                    reportException.add(reportData.getString("exception"));
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                            ReportBlockAdapter reportBlockAdapter = new ReportBlockAdapter(reportId,
+                                    reportDate,
+                                    reportAppname,
+                                    reportLocation,
+                                    reportException);
+                            reportList = findViewById(R.id.recycler_view);
+                            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+                            reportList.setLayoutManager(linearLayoutManager);
+                            reportList.setAdapter(reportBlockAdapter);
                         }
                     });
                 } catch (Exception e) {
@@ -83,12 +108,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.SettingsMItem:
                 Intent i = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(i);
+                break;
             case R.id.RefreshMItem:
-                Toast.makeText(this, "refresh plug", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.refreshing, Toast.LENGTH_SHORT).show();
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                String reportListUrl = "" + prefs.getString("serverAddress", "https://api.ec.tnkv.ru/") + "getReports?token=" +  prefs.getString("userToken", "");
+                String reportListUrl = "" + prefs.getString("serverAddress", "https://api.ec.tnkv.ru/") + "getReports?token=" + prefs.getString("userToken", "");
                 updateReportList(reportListUrl);
-                //updateReportList("https://api.ec.tnkv.ru/getReports?token=c8911f9d-4100-4e59-9766-8575979cecb0");
+                break;
         }
         return true;
     }

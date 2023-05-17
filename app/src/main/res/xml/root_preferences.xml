@@ -10,10 +10,5 @@
         app:title="@string/server_address"
         android:defaultValue="https://api.ec.tnkv.ru/"
         app:useSimpleSummaryProvider="true" />
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:key="isDebug"
-        android:title="@string/debug_switch" />
-
 
 </PreferenceScreen>
